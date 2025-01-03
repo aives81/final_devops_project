@@ -117,4 +117,5 @@ jobs:
             yarn install --no-lockfile
             yarn playwright install
             yarn test
+            npx playwright install --with-deps
             yarn e2e
