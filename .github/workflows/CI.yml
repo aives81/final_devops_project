@@ -106,6 +106,9 @@ jobs:
         steps:
         - name: Checkout code
           uses: actions/checkout@v4
+        
+        - name: Start Containers
+          run: docker compose -f "docker-compose.yml" up -d --build
 
         - name: Setup Node
           uses: actions/setup-node@v4
