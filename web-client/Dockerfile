@@ -8,18 +8,12 @@ RUN yarn install
 RUN yarn build
 RUN mv .next/server/pages /app
 
-FROM nginx:alpine
+FROM node:23-alpine
 
 WORKDIR /app
 
 COPY --from=build /app/ .
 
-EXPOSE 3000
+EXPOSE 8080
 
 CMD ["yarn", "start"]
-
-COPY nginx.conf /etc/nginx/nginx.conf
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]

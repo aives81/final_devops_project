@@ -1,30 +1,31 @@
 version: '3.9'
 
 services:
-  web-client:
-    build: ./web-client
-    ports:
-      - "3000:80"
+
+  database:
+    image: postgres:latest
     environment:
-      - NODE_ENV=production
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: vote-api
+    ports:
+      - "5432:5432"
 
   vote-api:
     build: ./vote-api
     ports:
       - "8080:8080"
     environment:
-      - NODE_ENV=production
+      - PG_URL="postgresql://user:password@ep-hidden-mountain-a53rwzo1.us-east-2.aws.neon.tech/neondb?sslmode=require
+
+  web-client:
+    build: ./web-client
+    ports:
+      - "3000:3000"
+    environment:
+      - VOTE_API_BASE_URL=http://vote-api:8080
 
   docs:
     build: ./docs
     ports:
       - "80:80"
-  
-  database:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: vote
-    ports:
-      - "5432:5432"
